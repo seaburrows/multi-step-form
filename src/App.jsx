@@ -122,16 +122,34 @@ const appStyles = css`
   border-radius: 6px;
 `;
 
-const App = () => {
-  return (
-    <div css={appStyles}>
-      <Global styles={globalStyles} />
-      <MultiForm
-        onSubmit={(values) => console.log(values)}
-        formConfig={formConfig}
-      />
-    </div>
+// Print the values in a flattened object
+// WARN: this is not future-proof
+const reduceValuesToTable = (values) =>
+  Object.values(values).reduce(
+    (acc, step) => ({
+      ...acc,
+      ...Object.entries(step).reduce(
+        (acc2, [key, value]) => ({
+          ...acc2,
+          [key]: value,
+        }),
+        {}
+      ),
+    }),
+    {}
   );
-};
+
+const App = () => (
+  <div css={appStyles}>
+    <Global styles={globalStyles} />
+
+    <MultiForm
+      formConfig={formConfig}
+      onSubmit={(values) => {
+        console.table(reduceValuesToTable(values));
+      }}
+    />
+  </div>
+);
 
 export default App;

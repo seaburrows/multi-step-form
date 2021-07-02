@@ -6,7 +6,7 @@ export const getFormSchema = (config) =>
 export const getStepLabels = (config) => config.map((cur) => [cur.label]);
 
 export const getStepComponents = (config) =>
-  config.filter((item) => !item.submittedPage).map((step) => step.component);
+  config.filter((item) => !item.submission).map((step) => step.component);
 
 export const getSubmittedPage = (config) =>
-  config.find((item) => item.submittedPage)?.component;
+  config.find((item) => item.submission)?.component;

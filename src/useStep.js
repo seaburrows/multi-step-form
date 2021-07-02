@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const DEFAULTS = {};
+const DEFAULTS = { initialIndex: 0, steps: [] };
 export const useStep = (options = {}) => {
   const { initialIndex, steps } = { ...DEFAULTS, ...options };
 

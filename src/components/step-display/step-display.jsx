@@ -9,6 +9,7 @@ const StepItem = ({ isCurrent, name }) => {
 
 export const StepDisplay = ({ stepIndex, stepTitles }) => {
   const styles = useContainerStyles();
+
   return (
     <div css={styles}>
       {stepTitles.map((name, index) => (

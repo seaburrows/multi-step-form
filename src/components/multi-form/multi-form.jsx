@@ -8,6 +8,7 @@ import {
   getStepLabels,
   getSubmittedPage,
 } from "./multi-form.utils";
+import { useButtonStyle } from "./multi-form.styles";
 
 export const FormContext = createContext({});
 
@@ -65,6 +66,8 @@ export const useFormStep = (name) => {
 };
 
 export const FormStepActions = ({ prev, next, submit, checkValidity }) => {
+  const style = useButtonStyle();
+
   const submitStep = async () => {
     const isValid = await checkValidity();
 
@@ -85,7 +88,7 @@ export const FormStepActions = ({ prev, next, submit, checkValidity }) => {
           Prev
         </button>
       )} */}
-      <button type="button" onClick={submitStep}>
+      <button type="button" css={style} onClick={submitStep}>
         Save
       </button>
     </div>
