@@ -18,6 +18,7 @@ export const globalStyles = css`
 
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+    color: var(---color-primary);
   }
 
   *,

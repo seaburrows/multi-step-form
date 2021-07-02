@@ -1,6 +1,35 @@
 import React from "react";
 import { useStyles, useLabelStyles, useErrorStyles } from "./field.styles";
 
+export const FieldLabel = ({ label, isRequired, fieldId, hasError }) => {
+  const labelStyles = useLabelStyles({ hasError });
+
+  return (
+    <label htmlFor={fieldId} css={labelStyles}>
+      {label}
+      {isRequired && " *"}
+    </label>
+  );
+};
+
+export const FieldErrors = ({ errors }) => {
+  const errorStyles = useErrorStyles();
+
+  return (
+    <ul>
+      {errors.map((err) => (
+        <li key={err} css={errorStyles}>
+          {err}
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+export const FieldHint = ({ hintText }) => {
+  return <p>{hintText}</p>;
+};
+
 export const Field = ({
   hasError,
   isRequired,
@@ -12,17 +41,12 @@ export const Field = ({
   ...inputEvents
 }) => {
   const styles = useStyles({ hasError });
-  const labelStyles = useLabelStyles({ hasError });
-  const errorStyles = useErrorStyles();
   const errors = getFieldErrors(name);
   const fieldId = `field-${name}`;
 
   return (
     <div>
-      <label htmlFor={fieldId} css={labelStyles}>
-        {label}
-        {isRequired && " *"}
-      </label>
+      <FieldLabel {...{ label, isRequired, name, fieldId, hasError }} />
       <input
         id={fieldId}
         type={type}
@@ -30,13 +54,8 @@ export const Field = ({
         css={styles}
         {...inputEvents}
       />
-      {hint && <p>{hint}</p>}
-      {errors &&
-        errors.map((err) => (
-          <p key={err} css={errorStyles}>
-            {err}
-          </p>
-        ))}
+      {hint && <FieldHint hintText={hint} />}
+      {errors && <FieldErrors errors={errors} />}
     </div>
   );
 };
