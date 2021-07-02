@@ -59,8 +59,7 @@ export const useFormStep = (name) => {
     },
     schema: stepSchema,
     values: stepValues,
-    getFieldErrors: (fieldName) =>
-      form.errors[name] ? form.errors[name][fieldName] : [],
+    getFieldErrors: (fieldName) => form.errors[name]?.[fieldName] || [],
     setFieldValue,
   };
 };
