@@ -62,6 +62,7 @@ const UserDetailsStep = () => {
       <Field
         label="Password"
         name="password"
+        type="password"
         isRequired
         hint={passwordRules.hintText}
         {...inputEvents}
