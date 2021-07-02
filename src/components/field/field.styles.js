@@ -8,9 +8,9 @@ export const useStyles = ({ hasError, inputType } = {}) => {
     input: css`
       line-height: 2rem;
       padding: 2px 6px;
-      color: var(--color-border);
+      color: var(--color-text);
       border-radius: 4px;
-      border: solid 1px ${hasError ? "var(--color-error" : "currentColor"};
+      border: solid 1px ${hasError ? "var(--color-error)" : "currentColor"};
     `,
     inputWrapper:
       inputType === "checkbox"
