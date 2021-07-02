@@ -1,6 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
-
 import { useStyles } from "./debug.styles";
 
 const isProduction = process.env.NODE_ENV === "production";

@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
 import { useStyles, useContainerStyles } from "./step-display.styles";
 
 const StepItem = ({ isCurrent, name }) => {
@@ -8,7 +7,7 @@ const StepItem = ({ isCurrent, name }) => {
   return <div css={style}>{name}</div>;
 };
 
-export const StepDisplay = ({ stepIndex, stepTitles }) => {
+export const StepDisplay = ({ stepIndex = 0, stepTitles }) => {
   const styles = useContainerStyles();
 
   return (

@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 
-export const useStyles = ({ isCurrent }) => css`
+export const useStyles = ({ isCurrent } = {}) => css`
   flex: 1 1 auto;
   padding: var(--spacing-s) var(--spacing-m);
   text-align: center;
