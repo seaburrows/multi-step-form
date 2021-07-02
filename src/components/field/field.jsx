@@ -1,5 +1,11 @@
 import React, { createContext, useContext } from "react";
-import { useStyles, useLabelStyles, useErrorStyles } from "./field.styles";
+import { Input } from "../input";
+import {
+  useStyles,
+  useLabelStyles,
+  useErrorStyles,
+  useHintStyles,
+} from "./field.styles";
 
 const FieldContext = createContext({});
 
@@ -13,7 +19,10 @@ export const useField = () => {
 
 export const FieldLabel = () => {
   const field = useField();
-  const labelStyles = useLabelStyles({ hasError: field.hasError });
+  const labelStyles = useLabelStyles({
+    hasError: field.hasError,
+    inputType: field.type,
+  });
 
   return (
     <label htmlFor={field.id} css={labelStyles}>
@@ -25,16 +34,16 @@ export const FieldLabel = () => {
 
 export const FieldErrors = () => {
   const field = useField();
-  const errorStyles = useErrorStyles();
+  const styles = useErrorStyles();
 
   if (!field.hasError) {
     return null;
   }
 
   return (
-    <ul>
+    <ul css={styles.list}>
       {field.errors.map((err) => (
-        <li key={err} css={errorStyles}>
+        <li key={err} css={styles.item}>
           {err}
         </li>
       ))}
@@ -44,12 +53,26 @@ export const FieldErrors = () => {
 
 export const FieldHint = () => {
   const field = useField();
+  const styles = useHintStyles();
 
   if (field.hint) {
-    return <p>{field.hint}</p>;
+    return <p css={styles}>{field.hint}</p>;
   }
 
   return null;
+};
+
+export const FieldInput = (props) => {
+  const field = useField();
+  const inputProps = {
+    id: field.id,
+    name: field.name,
+    type: field.type,
+    onChange: field.onChange,
+    onBlur: field.onBlur,
+  };
+
+  return <Input {...inputProps} {...props} />;
 };
 
 export const Field = ({
@@ -57,19 +80,20 @@ export const Field = ({
   name,
   type = "text",
   getFieldErrors,
-  onChange,
   ...props
 }) => {
   const errors = getFieldErrors(name);
   const hasError = errors.length > 0;
-  const styles = useStyles({ hasError });
+  const styles = useStyles({ hasError, inputType: type });
   const id = passedId || `field-${name}`;
 
   return (
-    <div>
-      <FieldProvider {...props} {...{ id, errors, hasError }}>
-        <FieldLabel />
-        <input id={id} type={type} name={name} css={styles} {...{ onChange }} />
+    <div css={styles.field}>
+      <FieldProvider {...props} {...{ id, name, errors, hasError, type }}>
+        <div css={styles.inputWrapper}>
+          <FieldLabel />
+          <FieldInput css={styles.input} />
+        </div>
         <FieldHint />
         <FieldErrors />
       </FieldProvider>

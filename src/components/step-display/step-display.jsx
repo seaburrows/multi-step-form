@@ -1,11 +1,19 @@
 import React from "react";
+import { useStyles, useContainerStyles } from "./step-display.styles";
+
+const StepItem = ({ isCurrent, name }) => {
+  const style = useStyles({ isCurrent });
+
+  return <div css={style}>{name}</div>;
+};
 
 export const StepDisplay = ({ stepIndex, stepTitles }) => {
+  const styles = useContainerStyles();
   return (
-    <div>
+    <div css={styles}>
       {stepTitles.map((name, index) => (
         // using index as a key here is acceptable since this is currently a unique identifier. // TODO: harden
-        <div key={index}>{name}</div>
+        <StepItem key={index} name={name} isCurrent={stepIndex === index} />
       ))}
     </div>
   );

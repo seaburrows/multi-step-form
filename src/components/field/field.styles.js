@@ -1,20 +1,61 @@
 import { css } from "@emotion/react";
 
-export const useStyles = ({ hasError } = {}) => {
-  return css``;
+export const useStyles = ({ hasError, inputType } = {}) => {
+  return {
+    field: css`
+      margin: var(--spacing-s) 0;
+    `,
+    input: css`
+      border: solid 1px ${hasError ? "var(--color-error" : "currentColor"};
+    `,
+    inputWrapper:
+      inputType === "checkbox"
+        ? css`
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+          `
+        : "",
+  };
 };
 
-export const useLabelStyles = ({ hasError } = {}) => {
-  return css`
-    ${hasError &&
-    css`
-      color: var(--color-error);
-    `};
-  `;
-};
+export const useLabelStyles = ({ hasError, inputType } = {}) => css`
+  display: block;
+  padding: var(--spacing-s) 0;
+  font-weight: bold;
+  font-size: var(--font-m);
+
+  ${hasError &&
+  css`
+    color: var(--color-error);
+  `};
+
+  ${inputType === "checkbox" &&
+  css`
+    padding: 0 0 var(--spacing-m) var(--spacing-s);
+    font-size: var(--font-s);
+    flex-basis: 100%;
+  `};
+`;
 
 export const useErrorStyles = ({ hasError } = {}) => {
-  return css`
-    color: var(--color-error);
-  `;
+  return {
+    list: css`
+      padding: var(--spacing-s) 0 0;
+      list-style: none;
+
+      color: var(--color-error);
+    `,
+    item: css`
+      & + & {
+        padding-top: var(--spacing-s);
+      }
+    `,
+  };
 };
+
+export const useHintStyles = () => css`
+  padding: var(--spacing-s) 0 0;
+
+  color: var(--color-information);
+`;
