@@ -2,6 +2,14 @@
 
 An example of a multi-step form with all components hand-rolled :sushi:
 
+> View the site here: https://upbeat-neumann-79f2d5.netlify.app
+
+This form is broken into two steps and a thank you page.
+
+It could be extended to have more steps by altering the configuration file.
+
+[yup]() is used for all validation and to customise error messages.
+
 ## Setup
 
 This project uses [Create React App]() under the hood.
@@ -10,6 +18,8 @@ To run locally:
 - install dependencies
 - run local development environment with `npm run start`
 - run tests with `npm run test`
+
+> Note: the development version includes a print out of the form state.
 
 
 ## Requirements
