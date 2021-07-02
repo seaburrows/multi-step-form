@@ -4,9 +4,9 @@ export const globalStyles = css`
   :root {
     --color-bg: #fff;
     --color-primary: #444;
-    --color-disabled: #aaa;
+    --color-border: #aaa;
     --color-error: #c00;
-    --color-information: #394c9a;
+    --color-information: #4085ff;
 
     --spacing-s: 0.4rem;
     --spacing-m: 0.75rem;
@@ -19,7 +19,7 @@ export const globalStyles = css`
     box-sizing: border-box;
     font-family: Arial, sans-serif;
     color: var(---color-primary);
-    background-color: #ffedfc;
+    background-color: #f1f1f1;
   }
 
   *,

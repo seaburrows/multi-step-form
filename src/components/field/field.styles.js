@@ -6,6 +6,10 @@ export const useStyles = ({ hasError, inputType } = {}) => {
       margin: var(--spacing-s) 0;
     `,
     input: css`
+      line-height: 2rem;
+      padding: 2px 6px;
+      color: var(--color-border);
+      border-radius: 4px;
       border: solid 1px ${hasError ? "var(--color-error" : "currentColor"};
     `,
     inputWrapper:
@@ -55,7 +59,7 @@ export const useErrorStyles = ({ hasError } = {}) => {
 };
 
 export const useHintStyles = () => css`
-  padding: var(--spacing-s) 0 0;
+  margin: var(--spacing-s) 0 0;
 
   color: var(--color-information);
 `;
