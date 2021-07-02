@@ -10,6 +10,9 @@ import {
   useFormStep,
 } from "./components/multi-form";
 import { Field } from "./components/field";
+import { getPasswordRules } from "./utility/get-password-rules.js";
+
+const passwordRules = getPasswordRules();
 
 const USER = "user";
 const SIGN_UP_OPTIONS = "sign-up-options";
@@ -60,7 +63,7 @@ const UserDetailsStep = () => {
         label="Password"
         name="password"
         isRequired
-        hint={password.hintText}
+        hint={passwordRules.hintText}
         {...inputEvents}
       />
 
@@ -71,12 +74,6 @@ const UserDetailsStep = () => {
 
 const ThankYouPage = () => {
   return <p>Nice!</p>;
-};
-
-const password = {
-  hintText:
-    "Please ensure your password has at least 9 characters and includes: one uppercase letter, one lowercase letter, and one number.",
-  regex: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{9,}$/,
 };
 
 const formConfig = [
@@ -91,7 +88,7 @@ const formConfig = [
         .required("Please enter your email address."),
       password: yup
         .string()
-        .matches(password.regex, "Password strength is too low.")
+        .matches(passwordRules.regex, "Password strength is too low.")
         .required("Please create a password."),
     }),
     label: "User",
