@@ -8,6 +8,7 @@ import {
   useHintStyles,
 } from "./field.styles";
 
+// Use context to avoid prop drilling
 const FieldContext = createContext({});
 
 export const FieldProvider = ({ children, ...props }) => (
@@ -18,6 +19,7 @@ export const useField = () => {
   return useContext(FieldContext);
 };
 
+// Label component 
 export const FieldLabel = () => {
   const field = useField();
   const labelStyles = useLabelStyles({
@@ -86,7 +88,7 @@ export const Field = ({
   const errors = getFieldErrors(name);
   const hasError = errors.length > 0;
   const styles = useStyles({ hasError, inputType: type });
-  const id = passedId || `field-${name}`;
+  const id = passedId || `field-${name}`; // ensure there is an id to link label and input
 
   return (
     <div css={styles.field}>

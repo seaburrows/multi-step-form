@@ -1,21 +1,30 @@
 import { css } from "@emotion/react";
 
+export const useActionsStyle = () => css`
+  display: flex;
+  justify-content: space-between;
+
+  > *:last-child {
+    margin-left: auto;
+  }
+`;
+
+// TODO: move Button into it's own component
 export const useButtonStyle = () => css`
-  display: block;
   min-width: 180px;
-  margin: 8px auto;
+  margin: var(--spacing-l) 0;
   padding: var(--spacing-m) var(--spacing-l);
   font-size: var(--font-s);
   border: none;
   border-radius: 4px;
   color: #fff;
-  background-color: #ea4c89;
+  background-color: var(--color-highlight);
   transition: background-color 0.15s;
   cursor: pointer;
 
   &:hover,
   &:focus,
   &:active {
-    background-color: #f082ac;
+    background-color: var(--color-highlight-alt);
   }
 `;

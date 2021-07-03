@@ -11,6 +11,10 @@ export const useStyles = ({ hasError, inputType } = {}) => {
       color: var(--color-text);
       border-radius: 4px;
       border: solid 1px ${hasError ? "var(--color-error)" : "currentColor"};
+
+      &:not([type="checkbox"]) {
+        width: 80%;
+      }
     `,
     inputWrapper:
       inputType === "checkbox"
@@ -26,7 +30,7 @@ export const useStyles = ({ hasError, inputType } = {}) => {
 export const useLabelStyles = ({ hasError, inputType } = {}) => css`
   display: block;
   padding: var(--spacing-s) 0;
-  font-weight: bold;
+  font-weight: 400;
   font-size: var(--font-m);
 
   ${hasError &&

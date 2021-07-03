@@ -9,16 +9,19 @@ import {
   getStepLabels,
   getSubmittedPage,
 } from "./multi-form.utils";
-import { useButtonStyle } from "./multi-form.styles";
+import { useActionsStyle, useButtonStyle } from "./multi-form.styles";
 
+// Use context to save on prop drilling as this DX is preferred.
 export const FormContext = createContext({});
 
 export const useFormStep = (name) => {
   const form = useContext(FormContext);
 
+  // extract the step information
   const stepSchema = form.schema[name];
   const stepValues = form.values[name];
 
+  // use yup validate and return any error messages
   const validateFormStep = async () => {
     const stepErrors = await stepSchema
       .validate(stepValues, { abortEarly: false })
@@ -37,9 +40,11 @@ export const useFormStep = (name) => {
       return false;
     }
 
+    // it is valid \o/
     return true;
   };
 
+  // Save the field value
   const setFieldValue = ({ target }) => {
     const { name: fieldName, value, checked, type: targetType } = target;
 
@@ -67,12 +72,15 @@ export const useFormStep = (name) => {
 };
 
 export const FormStepActions = ({ prev, next, submit, checkValidity }) => {
-  const style = useButtonStyle();
+  const containerStyle = useActionsStyle();
+  const buttonStyle = useButtonStyle();
 
+  // Step submission
   const submitStep = async () => {
     const isValid = await checkValidity();
-
+    
     if (isValid) {
+      // if the current step is not the last step, `next` will be a function
       if (typeof next === "function") {
         next();
       } else {
@@ -82,14 +90,14 @@ export const FormStepActions = ({ prev, next, submit, checkValidity }) => {
   };
 
   return (
-    <div>
+    <div css={containerStyle}>
       {/* TODO: Enable Previous button - BLOCKER: initial step state */}
       {/* {typeof prev === "function" && (
-        <button type="button" onClick={prev}>
+        <button type="button" css={buttonStyle} onClick={prev}>
           Prev
         </button>
       )} */}
-      <button type="button" css={style} onClick={submitStep}>
+      <button type="button" css={buttonStyle} onClick={submitStep}>
         Save
       </button>
     </div>
@@ -97,11 +105,16 @@ export const FormStepActions = ({ prev, next, submit, checkValidity }) => {
 };
 
 export const MultiForm = ({ formConfig, onSubmit }) => {
+  // These utility functions simply extract data from the configuration.
+  // We could combine these and have something like:
+  //    `const { schema, stepTitles } = useSchema(formConfig)`
   const schema = getFormSchema(formConfig);
   const stepTitles = getStepLabels(formConfig);
   const SubmittedPage = getSubmittedPage(formConfig);
   const formSteps = getStepComponents(formConfig);
 
+  // The step hook controls the navigation and the step state,
+  // it is not tied to the form state itself and could be reused.
   const {
     step: StepComponent,
     actions: stepActions,
@@ -112,6 +125,7 @@ export const MultiForm = ({ formConfig, onSubmit }) => {
   const [errors, storeErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
+  // Merge the submission event into the actions returned from `useStep()`
   const actions = {
     ...stepActions,
     submit: () => {
@@ -120,6 +134,7 @@ export const MultiForm = ({ formConfig, onSubmit }) => {
     },
   };
 
+  // Quick hack - submitted will always be last
   const stepDisplayIndex = submitted ? formSteps.length : stepIndex;
 
   return (

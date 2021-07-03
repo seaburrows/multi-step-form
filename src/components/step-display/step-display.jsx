@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import { useStyles, useContainerStyles } from "./step-display.styles";
+import { useStyles, usePseudoStyles, useContainerStyles } from "./step-display.styles";
 
 const StepItem = ({ isCurrent, name }) => {
   const style = useStyles({ isCurrent });
+  const pseudoStyle = usePseudoStyles({ isCurrent });
 
-  return <div css={style}>{name}</div>;
+  return <div css={[style, pseudoStyle ]}>{name}</div>;
 };
 
 export const StepDisplay = ({ stepIndex = 0, stepTitles }) => {
